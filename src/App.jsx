@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { polyfill } from "mobile-drag-drop";
 import suImage from "./assets/su.png";
 
-// Mobil cihazlarda HTML5 Drag & Drop calismasi icin polyfill
 polyfill({
   dragImageCenterOnTouch: true,
 });
@@ -16,7 +15,6 @@ function App() {
   const [draggedAnimal, setDraggedAnimal] = useState(null);
   const [modalMessage, setModalMessage] = useState(null);
 
-  // Dokunmatik ekranda kaymayi engellemek icin gerekli ayar
   useEffect(() => {
     const handleTouchMove = (e) => {};
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -24,16 +22,16 @@ function App() {
   }, []);
 
   const successMessages = [
-    "Harikasın Su!",
+    "Harikasin Su!",
     "Bravo Su!",
-    "Süpersin!",
-    "Muhteşemsin!",
-    "Çok zekisin!",
+    "Supersin!",
+    "Muhtesemsin!",
+    "Cok zekisin!",
     "Tebrikler!",
-    "Harika iş!",
+    "Harika is!",
     "Aferin Su!",
-    "Çok başarılısın!",
-    "Mükemmelsin!",
+    "Cok basarilisin!",
+    "Mukemmelsin!",
   ];
 
   const allAnimals = Object.entries(
@@ -66,7 +64,8 @@ function App() {
     setPage("game");
   };
 
-  const handleDrop = (r, c) => {
+  const handleDrop = (e, r, c) => {
+    e.preventDefault();
     if (!draggedAnimal) return;
     if (board[r][c] !== null) return;
 
@@ -95,8 +94,8 @@ function App() {
         <div className="home">
           <div className="card">
             <img src={suImage} className="profileImage" alt="Su" />
-            <h1 className="mainTitle">Su'nun Özel Oyunu</h1>
-            <p className="subtitle">Bir boyut seç ve başlayalım!</p>
+            <h1 className="mainTitle">Su'nun Ozel Oyunu</h1>
+            <p className="subtitle">Bir boyut sec ve baslayalim!</p>
 
             <div className="sizeButtons">
               <button onClick={() => startGame(3)}>3x3</button>
@@ -120,12 +119,8 @@ function App() {
         <div
           className="grid"
           style={{
-            gridTemplateColumns: `repeat(${size}, min(${
-              100 / size
-            }vw - 15px, 85px))`,
-            gridTemplateRows: `repeat(${size}, min(${
-              100 / size
-            }vw - 15px, 85px))`,
+            gridTemplateColumns: `repeat(${size}, 1fr)`,
+            gridTemplateRows: `repeat(${size}, 1fr)`,
           }}
         >
           {board.map((row, r) =>
@@ -133,8 +128,9 @@ function App() {
               <div
                 key={`${r}-${c}`}
                 className="cell"
+                onDragEnter={(e) => e.preventDefault()}
                 onDragOver={(e) => e.preventDefault()}
-                onDrop={() => handleDrop(r, c)}
+                onDrop={(e) => handleDrop(e, r, c)}
               >
                 {cell && (
                   <img
@@ -160,7 +156,10 @@ function App() {
               src={animal}
               width="55"
               draggable
-              onDragStart={() => setDraggedAnimal(animal)}
+              onDragStart={(e) => {
+                setDraggedAnimal(animal);
+                e.dataTransfer.setData("text/plain", animal);
+              }}
               alt="secenek"
             />
           ))}
@@ -190,13 +189,11 @@ function Styles() {
       body {
         margin:0;
         font-family: 'Comic Sans MS', cursive, sans-serif;
-        touch-action: pan-y; /* Istenmeyen zoom ve scroll'u engeller */
+        touch-action: pan-y;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         user-select: none;
       }
-
-      /* HOME */
 
       .home {
         height:100vh;
@@ -255,8 +252,6 @@ function Styles() {
         border:6px solid #ffb3d9;
       }
 
-      /* GAME */
-
       .gameContainer {
         min-height:100vh;
         background: linear-gradient(135deg,#fff1f9,#e6f4ff);
@@ -280,10 +275,10 @@ function Styles() {
       .grid {
         display:grid;
         gap:8px;
-        padding: 10px;
-        justify-content: center;
-        width: 100%;
-        max-width: 500px;
+        width: 90vw;
+        max-width: 450px;
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
       }
 
       .cell {
@@ -305,14 +300,13 @@ function Styles() {
         background: rgba(255,255,255,0.5);
         border-radius: 20px;
         width: 90%;
+        max-width: 450px;
       }
 
       .animalBar img {
         cursor:grab;
         touch-action: none;
       }
-
-      /* MODAL */
 
       .modalOverlay {
         position:fixed;
