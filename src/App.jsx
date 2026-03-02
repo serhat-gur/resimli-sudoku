@@ -136,8 +136,8 @@ function App() {
                   <img
                     src={cell}
                     style={{
-                      width: "75%",
-                      height: "75%",
+                      width: "80%",
+                      height: "80%",
                       objectFit: "contain",
                     }}
                     draggable={false}
@@ -153,8 +153,8 @@ function App() {
           {animals.map((animal, i) => (
             <img
               key={i}
+              className="dragAnimal"
               src={animal}
-              width="55"
               draggable
               onDragStart={(e) => {
                 setDraggedAnimal(animal);
@@ -209,19 +209,19 @@ function Styles() {
         border-radius:30px;
         text-align:center;
         box-shadow:0 20px 50px rgba(0,0,0,0.15);
-        width:85%;
-        max-width:340px;
+        width:90%;
+        max-width:380px;
         box-sizing: border-box;
       }
 
       .mainTitle {
-        font-size:28px;
+        font-size:32px;
         color:#ff2e63;
         margin-bottom:10px;
       }
 
       .subtitle {
-        font-size:16px;
+        font-size:18px;
         color:#333;
         margin-bottom:20px;
       }
@@ -230,22 +230,22 @@ function Styles() {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
+        gap: 12px;
       }
 
       .sizeButtons button {
-        padding:12px 24px;
+        padding:15px 30px;
         border:none;
         border-radius:25px;
-        font-size:18px;
+        font-size:20px;
         background: linear-gradient(90deg,#ffafcc,#bde0fe);
         cursor:pointer;
         font-weight:bold;
       }
 
       .profileImage {
-        width:130px;
-        height:130px;
+        width:140px;
+        height:140px;
         border-radius:50%;
         object-fit:cover;
         margin-bottom:20px;
@@ -258,32 +258,33 @@ function Styles() {
         display:flex;
         flex-direction:column;
         align-items:center;
-        padding-top:20px;
+        justify-content: space-evenly; /* Ekrani dikeyde esit doldurur */
+        padding: 20px 0;
         box-sizing: border-box;
       }
 
       .backBtn {
-        margin-bottom:20px;
-        padding:10px 25px;
+        padding:12px 30px;
         border:none;
         border-radius:20px;
         background:#ffafcc;
         cursor:pointer;
+        font-size: 16px;
         font-weight:bold;
       }
 
       .grid {
         display:grid;
-        gap:8px;
-        width: 90vw;
-        max-width: 450px;
+        gap:10px;
+        width: 95vw; /* Ekrani enlemesine iyice kaplar */
+        max-width: 500px;
         aspect-ratio: 1 / 1;
         margin: 0 auto;
       }
 
       .cell {
         background:white;
-        border-radius:15px;
+        border-radius:18px;
         display:flex;
         justify-content:center;
         align-items:center;
@@ -291,19 +292,23 @@ function Styles() {
       }
 
       .animalBar {
-        margin-top:20px;
         display:flex;
-        gap:12px;
+        gap:15px;
         flex-wrap:wrap;
         justify-content:center;
-        padding: 10px;
+        align-items:center;
+        padding: 15px;
         background: rgba(255,255,255,0.5);
         border-radius: 20px;
-        width: 90%;
-        max-width: 450px;
+        width: 95vw;
+        max-width: 500px;
+        box-sizing: border-box;
       }
 
-      .animalBar img {
+      .dragAnimal {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
         cursor:grab;
         touch-action: none;
       }
@@ -322,30 +327,32 @@ function Styles() {
 
       .modal {
         background:white;
-        padding:35px;
+        padding:40px;
         border-radius:25px;
         text-align:center;
         box-shadow:0 15px 40px rgba(0,0,0,0.25);
-        width:80%;
-        max-width:280px;
+        width:85%;
+        max-width:320px;
       }
 
       .modal h2 {
         color:#ff2e63;
-        margin-bottom:20px;
+        margin-bottom:25px;
+        font-size: 24px;
       }
 
       .modalButtons {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
       }
 
       .modalButtons button {
-        padding:12px 20px;
+        padding:15px 20px;
         border:none;
         border-radius:15px;
         background:#ffafcc;
+        font-size: 18px;
         font-weight:bold;
         cursor:pointer;
       }
